@@ -51,5 +51,12 @@ for i in range(0,len(rows),100):
     part=rows[i:i+100]
     (OUT/filename).write_text(json.dumps(part,separators=(",",":")),encoding="utf-8")
     catalogue.extend({k:v for k,v in r.items() if k!="points"}|{"shard":filename} for r in part)
-(OUT/"catalogue.json").write_text(json.dumps({"version":2,"count":len(rows),"sources":dict(counts),"skipped":dict(skipped),"items":catalogue},separators=(",",":")),encoding="utf-8")
+# Keep the index under GitHub Contents API's 1 MB inline-content limit.
+for old_index in OUT.glob("catalogue-*.json"): old_index.unlink()
+index_files=[]
+for i in range(0,len(catalogue),500):
+    fname=f"catalogue-{i//500:04d}.json"
+    (OUT/fname).write_text(json.dumps(catalogue[i:i+500],separators=(",",":")),encoding="utf-8")
+    index_files.append(fname)
+(OUT/"catalogue.json").write_text(json.dumps({"version":3,"count":len(rows),"sources":dict(counts),"skipped":dict(skipped),"index_files":index_files},separators=(",",":")),encoding="utf-8")
 print("711 source-filtered curves:",len(rows),"sources:",len(counts),"skipped:",dict(skipped),flush=True)
