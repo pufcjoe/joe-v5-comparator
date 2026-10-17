@@ -12,7 +12,7 @@ ROOT = Path("data/over-ear")
 RIG = "HMS II.3"
 MEASUREMENTS = "measurements/Rtings/data/over-ear/HMS II.3/"
 TARGETS = [
-    ("harman-2018", "Harman over-ear 2018", "targets/HMS II.3 Harman over-ear 2018.csv"),
+    ("harman-2018", "RTINGS Harman over-ear 2018", "targets/Rtings Harman over-ear 2018.csv"),
     ("harman-2018-no-bass", "Harman over-ear 2018 (without bass shelf)", "targets/HMS II.3 Harman over-ear 2018 without bass.csv"),
 ]
 SOURCE = "https://github.com/jaakkopasanen/AutoEq"
