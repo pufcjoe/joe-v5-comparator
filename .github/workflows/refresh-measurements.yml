@@ -1,5 +1,9 @@
 name: Refresh measurement catalogue
 on:
+  push:
+    branches: [main]
+    paths:
+      - 'scripts/build_overear_catalogue.py'
   workflow_dispatch:
   schedule:
     - cron: '20 4 1 * *'
@@ -16,6 +20,8 @@ jobs:
           python-version: '3.12'
       - name: Build catalogue
         run: python scripts/build_711_catalogue.py
+      - name: Build over-ear catalogue
+        run: python scripts/build_overear_catalogue.py
       - name: Commit catalogue
         run: |
           git config user.name "github-actions[bot]"
@@ -25,3 +31,4 @@ jobs:
             git commit -m "Refresh preprocessed FR catalogue"
             git push
           fi
+
